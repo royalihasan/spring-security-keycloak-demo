@@ -8,6 +8,7 @@ import com.alpha_setups.springsecuritykeycloakdemo.repository.MenuRepository;
 import com.alpha_setups.springsecuritykeycloakdemo.repository.RestaurantRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -46,7 +47,8 @@ public class RestaurantController {
 
     @PostMapping
     // admin can access (admin)
-    public Restaurant createRestaurant(Restaurant restaurant) {
+    @PreAuthorize("hasRole('admin')")
+    public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
 
